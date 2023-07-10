@@ -1,0 +1,10 @@
+.main {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    align-content: center;
+}
+
+.title h1 {
+    color: rgb(86, 122, 31)
+}
