@@ -15,10 +15,10 @@ export default async function page({ params }: { params: { tipo: any } }) {
     <div style={{ textAlign: 'center' }} >
       <h3>{data.tipo} {data.seed}</h3>
       <div className={styles.main} >
-        <CarouselUse images={data.image} />
         <Progressbar data={data} />
 
       </div>
+      <CarouselUse images={data.image} />
       <p>Descrição: {data.description}</p>
       <p>Quantidade: {data.quantidade}</p>
       <p>Corretor: {data.corretor}</p>
