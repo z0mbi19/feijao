@@ -1,89 +1,32 @@
-"use client"
-import Image from "next/image";
+import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
+import app from "../../../firebase";
+import CarouselUse from "@/app/components/Carousel/Carousel";
 import styles from './page.module.css'
-import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
+import Progressbar from "@/app/components/progressbar/Progressbar";
 
-export default function page({ params }: { params: { tipo: string } }) {
-  const percentage = 95;
+const firestore = getFirestore(app);
+
+export default async function page({ params }: { params: { tipo: any } }) {
+  const snapshot = await getDocs(collection(firestore, "feijao"))
+  const find = snapshot.docs.findIndex(x => x.id === params.tipo)
+  const data = snapshot.docs[find].data()
+
   return (
-    <div>
+    <div style={{ textAlign: 'center' }} >
+      <h3>{data.tipo} {data.seed}</h3>
       <div className={styles.main} >
-        <Image width="250" height="200" className={styles.imageCards} src={'/feijao.jpg'} alt='Feijão' />
-        <div className={styles.progrece}>
-          <div style={{ width: 100, height: 100 }}>
-            <CircularProgressbarWithChildren value={percentage} styles={buildStyles({
-              textColor: "red",
-              pathColor: "green",
-              trailColor: "gold"
-            })} >
-              <div style={{ fontSize: 12, marginLeft: -5, textAlign: 'center' }}>
+        <CarouselUse images={data.image} />
+        <Progressbar data={data} />
 
-                <p><strong>95%</strong> <br /> Peneira 12 </p>
-              </div>
-            </CircularProgressbarWithChildren>
-          </div>
-          <div style={{ width: 100, height: 100 }}>
-            <CircularProgressbarWithChildren value={percentage} styles={buildStyles({
-              textColor: "red",
-              pathColor: "green",
-              trailColor: "gold"
-            })} >
-              <div style={{ fontSize: 12, marginLeft: -5, textAlign: 'center' }}>
-
-                <p><strong>95%</strong> <br /> Peneira 11 </p>
-              </div>
-            </CircularProgressbarWithChildren>
-          </div>
-          <div style={{ width: 100, height: 100 }}>
-            <CircularProgressbarWithChildren value={percentage} styles={buildStyles({
-              textColor: "red",
-              pathColor: "green",
-              trailColor: "gold"
-            })} >
-              <div style={{ fontSize: 12, marginLeft: -5, textAlign: 'center' }}>
-
-                <p><strong>95%</strong> <br /> Peneira 10 </p>
-              </div>
-            </CircularProgressbarWithChildren>
-          </div>
-          <div style={{ width: 100, height: 100 }}>
-            <CircularProgressbarWithChildren value={percentage} styles={buildStyles({
-              textColor: "red",
-              pathColor: "green",
-              trailColor: "gold"
-            })} >
-              <div style={{ fontSize: 12, marginLeft: -5, textAlign: 'center' }}>
-
-                <p><strong>95%</strong> <br /> Peneira 9</p>
-              </div>
-            </CircularProgressbarWithChildren>
-          </div>
-          <div style={{ width: 100, height: 100 }}>
-            <CircularProgressbarWithChildren value={1} styles={buildStyles({
-              textColor: "red",
-              pathColor: "red",
-              trailColor: "gold"
-            })} >
-              <div style={{ fontSize: 12, marginLeft: -5, textAlign: 'center' }}>
-
-                Fundo <br /> <strong>1%</strong>
-              </div>
-            </CircularProgressbarWithChildren>
-          </div>
-          <div style={{ width: 100, height: 100 }}>
-            <CircularProgressbarWithChildren value={15} styles={buildStyles({
-              textColor: "red",
-              pathColor: "cy",
-              trailColor: "gold"
-            })} >
-              <div style={{ fontSize: 12, marginLeft: -5, textAlign: 'center' }}>
-
-                Umidade <br /> <strong>15.5%</strong>
-              </div>
-            </CircularProgressbarWithChildren>
-          </div>
-        </div>
       </div>
+      <p>Descrição: {data.description}</p>
+      <p>Quantidade: {data.quantidade}</p>
+      <p>Corretor: {data.corretor}</p>
+      <p>Telefone: {data.telefone}</p>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+      <a href={`https://api.whatsapp.com/send?phone=+55${data.telefone}&text=Olá estou interessado na amostra ${data.number}`} className="float" target="_blank">
+        <button style={{ backgroundColor: '#39b54a', borderRadius: '100px', color: 'white' }} ><i className="fa fa-whatsapp" style={{ fontSize: '48px', color: "white" }}></i></button>
+      </a>
     </div>
   )
 }

@@ -1,71 +1,14 @@
-import Image from 'next/image'
 import styles from './page.module.css'
-import Link from 'next/link'
+import Card from './components/cardHome/card'
+import CarouselUse from './components/Carousel/Carousel'
 
 export default function Home() {
-  const data = [
-    {
-      tipo: "Carioca",
-      umidade: '14',
-      peneira: "90%"
-    },
-    {
-      tipo: "Carioca",
-      umidade: '14',
-      peneira: "90%"
-    },
-    {
-      tipo: "Carioca",
-      umidade: '14',
-      peneira: "90%"
-    },
-    {
-      tipo: "Carioca",
-      umidade: '14',
-      peneira: "90%"
-    },
-    {
-      tipo: "Carioca",
-      umidade: '14',
-      peneira: "90%"
-    },
-    {
-      tipo: "Carioca",
-      umidade: '14',
-      peneira: "90%"
-    },
-    {
-      tipo: "Carioca",
-      umidade: '14',
-      peneira: "90%"
-    },
-    {
-      tipo: "Carioca",
-      umidade: '14',
-      peneira: "90%"
-    },
-    {
-      tipo: "Carioca",
-      umidade: '14',
-      peneira: "90%"
-    },
-    {
-      tipo: "Carioca",
-      umidade: '14',
-      peneira: "90%"
-    },
-  ]
+
   return (
-    <main >      
+    <main >
       <div className={styles.main}>
-        {data.map((item, i) => (
-          <Link href={`/feijao/${item.tipo}`} key={i} className={styles.card} >
-            <Image width="250" height="200" className={styles.imageCards} src={'/feijao.jpg'} alt='Feijão' />
-            <h3>{item.tipo}</h3>
-            <p>Umidade: {item.umidade}</p>
-            <p>Peneira 12: {item.peneira}</p>
-          </Link>
-        ) )}
+
+        <Card />
       </div>
     </main>
   )
